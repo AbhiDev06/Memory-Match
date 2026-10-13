@@ -1,0 +1,22 @@
+name: Memory Match CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check-project:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+
+      - name: Check project files
+        run: |
+          test -f memory.html
+          test -f memory.css
+          test -f memory.js
+          echo "All project files are present!"
