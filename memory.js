@@ -144,3 +144,30 @@ $("restart").addEventListener("click", newGame);
 $("playAgain").addEventListener("click", newGame);
 
 newGame();
+
+function showHint() {
+    if (locked) return;
+
+    const availableCards = [...board.querySelectorAll(".card")]
+        .filter(card =>
+            !card.classList.contains("matched") &&
+            card !== first &&
+            card !== second
+        );
+
+    if (availableCards.length === 0) return;
+
+    const card = availableCards[
+        Math.floor(Math.random() * availableCards.length)
+    ];
+
+    card.classList.add("flipped");
+
+    setTimeout(() => {
+        if (card !== first && !card.classList.contains("matched")) {
+            card.classList.remove("flipped");
+        }
+    }, 1000);
+}
+
+$("hint").addEventListener("click", showHint);
