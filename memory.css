@@ -1,0 +1,197 @@
+:root {
+  --bg1: #0f172a;
+  --bg2: #1e1b4b;
+  --card-back: linear-gradient(135deg, #6366f1, #ec4899);
+  --card-front: #fef9c3;
+  --ink: #e2e8f0;
+  --muted: #94a3b8;
+  --good: #34d399;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: radial-gradient(circle at top, var(--bg2), var(--bg1));
+  color: var(--ink);
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+.game {
+  width: 100%;
+  max-width: 520px;
+  text-align: center;
+}
+h1 {
+  margin: 0;
+  font-size: 2.2rem;
+  letter-spacing: 0.5px;
+}
+.sub {
+  color: var(--muted);
+  margin: 4px 0 18px;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  color: var(--ink);
+}
+:focus-visible {
+  outline: 2px solid #fbbf24;
+  outline-offset: 3px;
+}
+
+.levels {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.levels button {
+  background: transparent;
+  border: 1px solid #475569;
+  border-radius: 20px;
+  padding: 6px 18px;
+}
+.levels button.active {
+  background: #6366f1;
+  border-color: #6366f1;
+  color: #fff;
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.stats div {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 8px 20px;
+  min-width: 92px;
+}
+.stats small {
+  display: block;
+  color: var(--muted);
+}
+.stats b {
+  font-size: 1.4rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.board {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.card {
+  aspect-ratio: 1;
+  perspective: 600px;
+  background: none;
+  border: none;
+  padding: 0;
+}
+.inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.45s;
+  transform-style: preserve-3d;
+}
+.card.flipped .inner,
+.card.matched .inner {
+  transform: rotateY(180deg);
+}
+.face {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  backface-visibility: hidden;
+  font-size: clamp(1.6rem, 6vw, 2.4rem);
+}
+.back {
+  background: var(--card-back);
+  box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.25);
+}
+.front {
+  background: var(--card-front);
+  transform: rotateY(180deg);
+}
+.card.matched .front {
+  background: #bbf7d0;
+  box-shadow: 0 0 0 3px var(--good);
+}
+.card.wrong .front {
+  background: #fecaca;
+}
+
+.restart {
+  background: #fbbf24;
+  color: #1e1b4b;
+  font-weight: 700;
+  border: none;
+  border-radius: 24px;
+  padding: 10px 28px;
+}
+.restart:hover {
+  filter: brightness(1.08);
+}
+
+.win {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.75);
+  display: grid;
+  place-items: center;
+  padding: 16px;
+}
+.win[hidden] {
+  display: none;
+}
+.win-box {
+  background: #1e293b;
+  border-radius: 16px;
+  padding: 28px 32px;
+  text-align: center;
+  max-width: 340px;
+  animation: pop 0.35s ease;
+}
+.win-box h2 {
+  margin: 0 0 8px;
+  font-size: 1.8rem;
+  color: var(--good);
+}
+.win-box p {
+  color: var(--muted);
+  margin: 0 0 18px;
+}
+@keyframes pop {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inner {
+    transition: none;
+  }
+  .win-box {
+    animation: none;
+  }
+}
